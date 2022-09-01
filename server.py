@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from user import User
+import time
 
 app = Flask(__name__)
 
@@ -11,6 +12,15 @@ def home():
 def users():
     userList = User.get_all()
     return render_template('/users.html', users=userList)
+
+@app.route('/user/<int:userId>')
+def show_user(userId):
+    data = {
+        'id': userId
+    }
+
+    user_data = User.get_user(data)
+    return render_template('/user.html',user=user_data)
 
 @app.route('/user/new')
 def new_user():
@@ -24,8 +34,8 @@ def create_user():
         'email': request.form.get('email')
     }
 
-    User.add(data)
 
+    User.add(data)
     return redirect('/users')
 
 if __name__ == "__main__":

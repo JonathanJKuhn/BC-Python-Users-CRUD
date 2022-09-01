@@ -20,6 +20,12 @@ class User:
             f'Updated At: {self.updated_at}\n'
 
         )
+    @classmethod
+    def get_user(cls, data):
+        query = "SELECT * FROM users WHERE id = %(id)s;"
+        res = connectToMySQL('users_schema').query_db(query, data)
+
+        return cls(res[0])
 
     @classmethod
     def get_all(cls):
@@ -29,6 +35,7 @@ class User:
 
         for user in results:
             users.append(cls(user))
+        
         return users
 
     @classmethod
