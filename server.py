@@ -15,10 +15,7 @@ def users():
 
 @app.route('/user/<int:userId>')
 def show_user(userId):
-    data = {
-        'id': userId
-    }
-
+    data = {'id': userId}
     user_data = User.get_user(data)
     return render_template('/user.html',user=user_data)
 
@@ -32,10 +29,31 @@ def create_user():
         'fname': request.form.get('fname'),
         'lname': request.form.get('lname'),
         'email': request.form.get('email')
-    }
-
-
+        } 
     User.add(data)
+    return redirect('/users')
+
+@app.route('/user/<int:userId>/edit')
+def edit_user(userId):
+    data = {'id' : userId}
+    user_data = User.get_user(data)
+    return render_template('/edit.html',user=user_data)
+
+@app.route('/user/<int:userId>/update', methods=['POST'])
+def update_user(userId):
+    data = {
+        'id': request.form.get('id'),
+        'fname': request.form.get('fname'),
+        'lname': request.form.get('lname'),
+        'email': request.form.get('email')
+    }
+    User.update(data)
+    return redirect(f'/user/{userId}')
+
+@app.route('/user/<int:userId>/delete')
+def delete_user(userId):
+    data = {'id': userId}
+    User.delete(data)
     return redirect('/users')
 
 if __name__ == "__main__":

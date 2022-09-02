@@ -10,21 +10,26 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Edit User {user.id}</h1>
-        <form action="/user/create" method="post">
+        <div class="wrapper d-flex justify-content-between align-items-center">
+            <h1 class="mb-3">Edit User {{user.id}}</h1>
+            <a href="/users" class="btn btn-primary">Home</a>
+        </div>
+        <form action="/user/{{user.id}}/update" method="post">
             <div class="mb-3">
                 <label for="fname" class="form-label">First Name:</label>
-                <input type="text" class="form-control" name="fname" id="fname">
+                <input type="text" class="form-control" name="fname" id="fname" value="{{user.fname}}">
             </div>
             <div class="mb-3">
                 <label for="lname" class="form-label">Last Name:</label>
-                <input type="text" class="form-control" name="lname" id="lname">
+                <input type="text" class="form-control" name="lname" id="lname" value="{{user.lname}}">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" name="email" id="email">
+                <input type="email" class="form-control" name="email" id="email" value="{{user.email}}">
             </div>
-            <input type="submit" class="btn btn-success" value="Submit">
+            <input type="hidden" name="id" value="{{user.id}}">
+            <input type="submit" class="btn btn-success" value="Update">
+            <a href="/user/{{user.id}}/delete" class="d-block-inline btn btn-danger">Delete</a>
         </form>
     </div>
 </body>
